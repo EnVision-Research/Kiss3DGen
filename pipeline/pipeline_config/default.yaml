@@ -1,0 +1,34 @@
+flux:
+  base_model: "https://huggingface.co/Comfy-Org/flux1-dev/blob/main/flux1-dev-fp8.safetensors"
+  # base_model: "black-forest-labs/FLUX.1-dev"
+  flux_dtype: 'bf16'
+  lora: "./checkpoint/flux_lora/rgb_normal_large.safetensors"
+  controlnet: "InstantX/FLUX.1-dev-Controlnet-Union"
+  redux: "black-forest-labs/FLUX.1-Redux-dev"
+  num_inference_steps: 20
+  seed: 42
+  device: 'cuda:0'
+
+multiview:
+  base_model: "sudo-ai/zero123plus-v1.2"
+  custom_pipeline: "./models/zero123plus"
+  unet: "./checkpoint/zero123++/flexgen.ckpt"
+  num_inference_steps: 50
+  seed: 42
+  device: 'cuda:0'
+
+reconstruction:
+  model_config: "./models/lrm/config/PRM_inference.yaml"
+  base_model: "./checkpoint/lrm/final_ckpt.ckpt"
+  device: 'cuda:0'
+
+caption:
+  base_model: "multimodalart/Florence-2-large-no-flash-attn"
+  device: 'cuda:0'
+
+llm:
+  base_model: "Qwen/Qwen2-7B-Instruct"
+  device: 'cuda:0'
+
+use_zero_gpu: false # for huggingface demo only
+3d_bundle_templates: './init_3d_Bundle'
