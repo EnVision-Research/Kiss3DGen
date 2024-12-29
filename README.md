@@ -66,6 +66,24 @@ python ./pipeline/example_image_to_3d.py
 python ./pipeline/example_image_to_3d.py
 ```
 
+## Gradio Demo
+Interactive inference: run your local gradio demo.
+1. Download the weights
+```bash
+python download_models.py
+```
+```
+Kiss3DGen
+    ├──checkpoint
+        ├── flux_lora/
+        ├── lrm/
+        ├── zero123++/
+```
+2. Run the local gradio demo
+```bash
+python app.py --port 1234
+```
+
 # 📜 Citation
 If you find our work useful for your research or applications, please cite using this BibTeX:
 

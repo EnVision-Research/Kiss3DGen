@@ -85,7 +85,7 @@ def init_wrapper_from_config(config_path):
     # breakpoint()
     # load lora weights
     if not os.path.exists(flux_lora_pth):
-        flux_lora_pth = hf_hub_download(repo_id="LTT/Kiss3DGen", filename="rgb_normal_large.safetensors", repo_type="model")
+        flux_lora_pth = hf_hub_download(repo_id="LTT/Kiss3DGen", filename="rgb_normal.safetensors", repo_type="model")
     flux_pipe.load_lora_weights(flux_lora_pth)
     flux_pipe.to(device=flux_device)
 
