@@ -30,9 +30,6 @@ conda create --name kiss3dgen python=3.10
 conda activate kiss3dgen
 pip install -U pip
 
-# Ensure Ninja is installed
-conda install Ninja
-
 # Install the correct version of CUDA
 conda install cuda -c nvidia/label/cuda-12.1.0
 
