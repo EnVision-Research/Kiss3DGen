@@ -23,8 +23,6 @@ PyOpenGL==3.1.0
 PyYAML==6.0.1
 rembg==2.0.57
 scipy==1.13.1
-torch-scatter 
--f https://data.pyg.org/whl/torch-2.4.0+cu121.html
 tqdm==4.66.4
 transformers==4.47.1
 trimesh==4.4.0

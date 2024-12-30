@@ -44,6 +44,9 @@ pip install xformers==0.0.27.post1
 # Install Pytorch3D 
 pip install --no-index --no-cache-dir pytorch3d -f https://dl.fbaipublicfiles.com/pytorch3d/packaging/wheels/py310_cu121_pyt240/download.html
 
+# Install torch-scatter 
+pip install torch-scatter -f https://data.pyg.org/whl/torch-2.4.0+cu121.html
+
 # Install other requirements
 pip install -r requirements.txt
 ```
