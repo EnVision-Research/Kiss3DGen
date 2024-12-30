@@ -81,7 +81,7 @@ Kiss3DGen
 ```
 2. Run the local gradio demo
 ```bash
-python app.py --port 1234
+python app.py
 ```
 
 # 📜 Citation
