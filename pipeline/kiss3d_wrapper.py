@@ -742,7 +742,7 @@ def run_image_to_3d(k3d_wrapper, input_image_path, enable_redux=True, use_mv_rgb
 
 
 if __name__ == "__main__":
-    k3d_wrapper = init_wrapper_from_config('/hpc2hdd/home/jlin695/code/github/Kiss3DGen/pipeline/pipeline_config/default.yaml')
+    k3d_wrapper = init_wrapper_from_config('./pipeline_config/default.yaml')
 
     os.system(f'rm -rf {TMP_DIR}/*')
     # os.system(f'rm -rf {OUT_DIR}/3d_bundle/*')
@@ -751,7 +751,7 @@ if __name__ == "__main__":
     use_mv_rgb = True
     use_controlnet = True
 
-    img_folder = '/hpc2hdd/home/jlin695/code/Kiss3DGen/examples'
+    img_folder = './examples'
     for img_ in os.listdir(img_folder):
         name, _ = os.path.splitext(img_)
         print("Now processing:", name)
@@ -760,16 +760,3 @@ if __name__ == "__main__":
 
         os.system(f'cp -f {gen_save_path} {OUT_DIR}/3d_bundle/{name}_3d_bundle.png')
         os.system(f'cp -f {recon_mesh_path} {OUT_DIR}/3d_bundle/{name}.obj')
-
-    # TODO exams:
-    # 1. redux True, mv_rgb False, Tile, down_scale = 1
-    # 2. redux False, mv_rgb True, Tile, down_scale = 8
-    # 3. redux False, mv_rgb False, Tile, blur = 10
-
-    
-    # run_text_to_3d(k3d_wrapper, prompt='A doll of a girl in Harry Potter')
-
-
-    # Example of loading existing 3D bundle Image as Tensor from path
-    # pseudo_image = Image.open('/hpc2hdd/home/jlin695/code/github/Kiss3DGen/outputs/tmp/fbf6edad-2d7f-49e5-8ac2-a05af5fe695b_ref_3d_bundle_image.png')
-    # gen_3d_bundle_image = torchvision.transforms.functional.to_tensor(pseudo_image)

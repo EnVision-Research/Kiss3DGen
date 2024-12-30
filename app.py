@@ -32,15 +32,15 @@ TEXT_URL = "http://127.0.0.1:9239/prompt"
 IMG_URL = ""
 
 
-KISS_3D_TEXT_FOLDER = "/hpc2hdd/home/jlin695/code/github/Kiss3DGen/outputs/text2"
-KISS_3D_IMG_FOLDER = "/hpc2hdd/home/jlin695/code/github/Kiss3DGen/outputs/image2"
+KISS_3D_TEXT_FOLDER = "./outputs/text2"
+KISS_3D_IMG_FOLDER = "./outputs/image2"
 
 # Add logo file path and hyperlinks
 LOGO_PATH = "app_assets/logo_temp_.png"  # Update this to the actual path of your logo
 ARXIV_LINK = "https://arxiv.org/abs/example"
 GITHUB_LINK = "https://github.com/example"
 
-k3d_wrapper = init_wrapper_from_config('/hpc2hdd/home/jlin695/code/github/Kiss3DGen/pipeline/pipeline_config/default.yaml')
+k3d_wrapper = init_wrapper_from_config('./pipeline/pipeline_config/default.yaml')
 
 
 TEMP_MESH_ADDRESS=''

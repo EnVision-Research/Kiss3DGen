@@ -429,37 +429,3 @@ def collate_fn(batch):
     }
 
     return data
-    
-
-if __name__ == '__main__':
-    dataset = ObjaverseData(root_dir="/hpc2hdd/JH_DATA/share/yingcongchen/PrivateShareGroup/yingcongchen_datasets/Objaverse_highQuality_singleObj_texture_small_OBJ_Mesh_final",
-                            light_dir="/hpc2hdd/JH_DATA/share/yingcongchen/PrivateShareGroup/yingcongchen_datasets/env_mipmap_large",
-                            target_view_num=4,
-                            fov=30,
-                            camera_distance=5.0,
-                            validation=True,
-                            random_camera=False,
-                            random_elevation=False,
-                            )
-    dataloader = DataLoader(dataset, batch_size=32, shuffle=False, collate_fn=collate_fn)
-    index = 0
-    for batch in tqdm(dataloader):
-        pass
-        # batch, view, c, h, w
-        # target_ccms = batch["target_ccms"][:,:,:3]
-        # target_images = batch["target_images"]
-        # target_depths = batch["target_depths"]
-        # target_normals = batch["target_normals"]
-        # target_albedos = batch["target_albedos"]
-        # pass
-        # torchvision.utils.save_image(target_ccms[2], f"debug_output/target_ccms_{index}.png", normalize=True)
-        # torchvision.utils.save_image(target_images[2], f"debug_output/target_images_{index}.png", normalize=True)
-        # torchvision.utils.save_image(target_depths[2], f"debug_output/target_depths_{index}.png", normalize=True)
-        # torchvision.utils.save_image(target_normals[2], f"debug_output/target_normals_{index}.png", normalize=True)
-        # torchvision.utils.save_image(target_albedos[2], f"debug_output/target_albedos_{index}.png", normalize=True)
-        # breakpoint()
-        # torchvision.utils.save_image(torch.cat([target_images[2], target_albedos[2]], dim=2), f"debug_output/target_images_albedos_{index}.png", normalize=True)
-        # # exit()
-        # index += 1
-        # if index >= 10:
-        #     exit()
