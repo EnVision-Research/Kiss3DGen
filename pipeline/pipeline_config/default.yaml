@@ -2,7 +2,7 @@ flux:
   base_model: "https://huggingface.co/Comfy-Org/flux1-dev/blob/main/flux1-dev-fp8.safetensors"
   # base_model: "black-forest-labs/FLUX.1-dev"
   flux_dtype: 'bf16'
-  lora: "./checkpoint/flux_lora/rgb_normal_large.safetensors"
+  lora: "./checkpoint/flux_lora/rgb_normal.safetensors"
   controlnet: "InstantX/FLUX.1-dev-Controlnet-Union"
   redux: "black-forest-labs/FLUX.1-Redux-dev"
   num_inference_steps: 20
