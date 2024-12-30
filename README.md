@@ -19,7 +19,7 @@
 - [✅] Release inference code.
 - [✅] Release model weights.
 - [✅] Release huggingface gradio demo. Please try it at [HF demo](https://huggingface.co/spaces/LTT/Kiss3DGen) link.
-- [] Release local gradio demo. Please try it at [Local demo](https://huggingface.co/spaces/LTT/Kiss3DGen) link.
+- [] Release local gradio demo (more applications). Please try it at [Local demo](https://huggingface.co/spaces/LTT/Kiss3DGen) link.
 
 
 # ⚙️ Dependencies and Installation
