@@ -28,10 +28,6 @@ from pipeline.kiss3d_wrapper import init_wrapper_from_config, run_text_to_3d, ru
 import gradio as gr
 is_running = False
 
-TEXT_URL = "http://127.0.0.1:9239/prompt"
-IMG_URL = ""
-
-
 KISS_3D_TEXT_FOLDER = "./outputs/text2"
 KISS_3D_IMG_FOLDER = "./outputs/image2"
 
