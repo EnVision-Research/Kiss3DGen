@@ -70,7 +70,7 @@ def init_wrapper_from_config(config_path):
     flux_redux_pth = config_['flux'].get('redux', None)
     
     if flux_base_model_pth.endswith('safetensors'):
-        flux_pipe = FluxImg2ImgPipeline.from_single_file(flux_base_model_pth, torch_dtype=dtype_[flux_dtype])
+        flux_pipe = FluxImg2ImgPipeline.from_single_file(flux_base_model_pth, torch_dtype=dtype_[flux_dtype], )
     else:
         flux_pipe = FluxImg2ImgPipeline.from_pretrained(flux_base_model_pth, torch_dtype=dtype_[flux_dtype])
     
@@ -92,7 +92,7 @@ def init_wrapper_from_config(config_path):
     # load redux model
     flux_redux_pipe = None
     if flux_redux_pth is not None:
-        flux_redux_pipe = FluxPriorReduxPipeline.from_pretrained(flux_redux_pth, torch_dtype=torch.bfloat16)
+        flux_redux_pipe = FluxPriorReduxPipeline.from_pretrained(flux_redux_pth, torch_dtype=torch.bfloat16, )
         flux_redux_pipe.text_encoder = flux_pipe.text_encoder
         flux_redux_pipe.text_encoder_2 = flux_pipe.text_encoder_2
         flux_redux_pipe.tokenizer = flux_pipe.tokenizer
@@ -710,7 +710,7 @@ def run_image_to_3d(k3d_wrapper, input_image_path, enable_redux=True, use_mv_rgb
         control_image = [k3d_wrapper.preprocess_controlnet_cond_image(reference_3d_bundle_image, mode_, down_scale=1, kernel_size=51, sigma=2.0) for mode_ in control_mode]
         control_guidance_start = [0.0]
         control_guidance_end = [0.65]
-        controlnet_conditioning_scale = [0.3]
+        controlnet_conditioning_scale = [0.6]
 
 
         gen_3d_bundle_image, gen_save_path = k3d_wrapper.generate_3d_bundle_image_controlnet(
