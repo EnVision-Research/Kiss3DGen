@@ -188,7 +188,7 @@ def auto_normals(imesh):
     v_nrm.scatter_add_(0, i2[:, None].repeat(1,3), face_normals)
 
     # Normalize, replace zero (degenerated) normals with some default value
-    v_nrm = torch.where(util.dot(v_nrm, v_nrm) > 1e-20, v_nrm, torch.tensor([0.0, 0.0, 1.0], dtype=torch.float32, device='cuda'))
+    v_nrm = torch.where(util.dot(v_nrm, v_nrm) > 1e-20, v_nrm, torch.tensor([0.0, 0.0, 1.0], dtype=torch.float32, device=imesh.v_pos.device))
     v_nrm = util.safe_normalize(v_nrm)
 
     if torch.is_anomaly_enabled():

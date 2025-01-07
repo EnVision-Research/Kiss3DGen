@@ -74,9 +74,9 @@ def _get_plugin():
         pass
 
     # Compile and load.
-    # source_paths = [os.path.join(os.path.dirname(__file__), fn) for fn in source_files]
-    # torch.utils.cpp_extension.load(name='renderutils_plugin', sources=source_paths, extra_cflags=opts,
-    #      extra_cuda_cflags=opts, extra_ldflags=ldflags, with_cuda=True, verbose=True)
+    source_paths = [os.path.join(os.path.dirname(__file__), fn) for fn in source_files]
+    torch.utils.cpp_extension.load(name='renderutils_plugin', sources=source_paths, extra_cflags=opts,
+         extra_cuda_cflags=opts, extra_ldflags=ldflags, with_cuda=True, verbose=True)
 
     # Import, cache, and return the compiled module.
     import renderutils_plugin

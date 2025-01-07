@@ -570,7 +570,7 @@ class kiss3d_wrapper(object):
             recon_3D_bundle_image = torchvision.utils.make_grid(torch.cat([lrm_multi_view_rgb.cpu(), (lrm_multi_view_normals.cpu() + 1) / 2], dim=0), nrow=4, padding=0).unsqueeze(0) # range [0, 1]        
             torchvision.utils.save_image(recon_3D_bundle_image, os.path.join(TMP_DIR, f'{self.uuid}_lrm_recon_3d_bundle_image.png'))
 
-        recon_mesh_path = os.path.join(TMP_DIR, f"{self.uuid}_isomer_recon_mesh.obj")
+        recon_mesh_path = os.path.join(TMP_DIR, f"{self.uuid}_isomer_recon_mesh.glb")
         
         return isomer_reconstruct(rgb_multi_view=rgb_multi_view,
                                   normal_multi_view=normal_multi_view,
@@ -609,7 +609,7 @@ def run_text_to_3d(k3d_wrapper,
 
     # recon from 3D Bundle image
     recon_mesh_path = k3d_wrapper.reconstruct_3d_bundle_image(gen_3d_bundle_image, save_intermediate_results=False,
-                                                              isomer_radius=4.2)
+                                                              isomer_radius=4.2, reconstruction_stage2_steps=50)
 
     return gen_save_path, recon_mesh_path
 
