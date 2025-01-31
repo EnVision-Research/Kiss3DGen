@@ -25,7 +25,7 @@ def _find_mat(materials, name):
     return materials[0] # Materials 0 is the default
 
 
-def normalize_mesh(vertices):
+def normalize_mesh(vertices, scale=2.0):
     # 计算边界框
     min_vals, _ = torch.min(vertices, dim=0)
     max_vals, _ = torch.max(vertices, dim=0)
@@ -38,10 +38,9 @@ def normalize_mesh(vertices):
     
     # 计算缩放因子
     max_extent = torch.max(max_vals - min_vals)
-    scale = 2.0 / max_extent
     
     # 缩放顶点
-    vertices = vertices * scale
+    vertices = vertices * scale / max_extent
     
     return vertices
 

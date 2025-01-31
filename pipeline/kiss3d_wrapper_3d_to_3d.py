@@ -1,6 +1,7 @@
 # The kiss3d pipeline wrapper for inference
 
 import os
+import pdb
 # import spaces
 import numpy as np
 import random
@@ -10,10 +11,9 @@ import uuid
 from typing import Union, Any, Dict
 from einops import rearrange
 from PIL import Image
-import time
 
 from pipeline.utils import logger, TMP_DIR, OUT_DIR
-from pipeline.utils import lrm_reconstruct, isomer_reconstruct, preprocess_input_image
+from pipeline.utils import lrm_reconstruct, isomer_reconstruct, preprocess_input_image, render_3d_bundle_image_from_mesh
 
 import torch
 import torchvision
@@ -558,7 +558,7 @@ class kiss3d_wrapper(object):
         print(f'shape images: {images.shape}')
         # breakpoint()
         rgb_multi_view = rgb_multi_view.to(recon_device) * multi_view_mask + (1 - multi_view_mask)
-        end = time.time()
+        
         with self.context():
             vertices, faces, lrm_multi_view_normals, lrm_multi_view_rgb, lrm_multi_view_albedo = \
             lrm_reconstruct(self.recon_model, self.recon_model_config.infer_config,
@@ -566,7 +566,7 @@ class kiss3d_wrapper(object):
                             input_camera_type='kiss3d', render_3d_bundle_image=save_intermediate_results,
                             render_azimuths=[0, 90, 180, 270],
                             render_radius=lrm_render_radius)
-        print(f'lrm_reconstruct time: {time.time() - end}')
+
         if save_intermediate_results:
             recon_3D_bundle_image = torchvision.utils.make_grid(torch.cat([lrm_multi_view_rgb.cpu(), (lrm_multi_view_normals.cpu() + 1) / 2], dim=0), nrow=4, padding=0).unsqueeze(0) # range [0, 1]        
             torchvision.utils.save_image(recon_3D_bundle_image, os.path.join(TMP_DIR, f'{self.uuid}_lrm_recon_3d_bundle_image.png'))
@@ -602,12 +602,12 @@ def run_text_to_3d(k3d_wrapper,
     logger.info(f"Input prompt: \"{prompt}\"")
     
     prompt = k3d_wrapper.get_detailed_prompt(prompt)
-    end = time.time()
+
     gen_3d_bundle_image, gen_save_path = k3d_wrapper.generate_3d_bundle_image_text(prompt, 
                                                                                    image=init_image, 
                                                                                    strength=1.0, 
                                                                                    save_intermediate_results=True)
-    print(f"3d bundle image generation time: {time.time() - end}")
+
     # recon from 3D Bundle image
     recon_mesh_path = k3d_wrapper.reconstruct_3d_bundle_image(gen_3d_bundle_image, save_intermediate_results=False,
                                                               isomer_radius=4.2, reconstruction_stage2_steps=50)
@@ -741,36 +741,48 @@ def run_image_to_3d(k3d_wrapper, input_image_path, enable_redux=True, use_mv_rgb
 
     return gen_save_path, recon_mesh_path
 
-def run_redux_image_to_3d(k3d_wrapper, input_image_path, prompt=None, init_image_path=None, strength=1.0):
-    # ======================================= Example of image to 3D generation ======================================
-
+def run_3d_to_3d(k3d_wrapper, input_mesh_path, prompt=None, use_controlnet=True, refine_prompt=True):
     # Renew The uuid
     k3d_wrapper.renew_uuid()
 
-    # FOR IMAGE TO 3D: generate reference 3D bundle image from a single input image
-    input_image = preprocess_input_image(Image.open(input_image_path))
-    input_image.save(os.path.join(TMP_DIR, f'{k3d_wrapper.uuid}_input_image.png'))
+    reference_3d_bundle_image = render_3d_bundle_image_from_mesh(input_mesh_path)
+    torchvision.utils.save_image(reference_3d_bundle_image, os.path.join(TMP_DIR, f'{k3d_wrapper.uuid}_reference_3d_bundle_image.png'))
 
-    # breakpoint()
     if prompt is None:
-        caption = k3d_wrapper.get_image_caption(input_image)
+        caption = k3d_wrapper.get_image_caption(reference_3d_bundle_image)
     else:
-        caption = prompt
+        if refine_prompt:
+            caption = k3d_wrapper.get_detailed_prompt(prompt)
+        else:
+            caption = prompt
 
-    redux_hparam = {
-        'image': k3d_wrapper.to_512_tensor(input_image).unsqueeze(0).clip(0., 1.),
-        'prompt_embeds_scale': 1.0,
-        'pooled_prompt_embeds_scale': 1.0,
-        'strength': strength
-    }
+    redux_hparam = None
 
-    init_image = None
-    if init_image_path is not None:
-        init_image = Image.open(init_image_path)
-    gen_3d_bundle_image, gen_save_path = k3d_wrapper.generate_3d_bundle_image_text(
+    if use_controlnet:
+        # prepare controlnet condition
+        control_mode = ['tile']
+        control_image = [k3d_wrapper.preprocess_controlnet_cond_image(reference_3d_bundle_image, mode_, down_scale=1, kernel_size=51, sigma=2.0) for mode_ in control_mode]
+        control_guidance_start = [0.0]
+        control_guidance_end = [0.2]
+        controlnet_conditioning_scale = [0.1]
+
+        gen_3d_bundle_image, gen_save_path = k3d_wrapper.generate_3d_bundle_image_controlnet(
             prompt=caption,
-            image=init_image, 
-            strength=0.95,
+            image=reference_3d_bundle_image.unsqueeze(0),
+            strength=.95,
+            control_image=control_image, 
+            control_mode=control_mode,
+            control_guidance_start=control_guidance_start,
+            control_guidance_end=control_guidance_end,
+            controlnet_conditioning_scale=controlnet_conditioning_scale,
+            lora_scale=1.0,
+            redux_hparam=redux_hparam
+        )
+    else:
+        gen_3d_bundle_image, gen_save_path = k3d_wrapper.generate_3d_bundle_image_text(
+            prompt=caption,
+            image=reference_3d_bundle_image.unsqueeze(0),
+            strength=1.0,
             lora_scale=1.0,
             redux_hparam=redux_hparam
         )

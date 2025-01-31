@@ -77,7 +77,7 @@ def shade_with_env(gb_pos, gb_normal, kd, metallic, roughness, view_pos, run_n_v
         NdotV = torch.clamp(render_utils.dot(wo[i,:,:,:], nrmvec[i,:,:,:]), min=1e-4)
         fg_uv = torch.cat((NdotV, roughness_gt[i,:,:,:]), dim=-1)
         #if not hasattr(self, '_FG_LUT'):
-        _FG_LUT = torch.as_tensor(np.fromfile('/root/ComfyUI/custom_nodes/ComfyUI-3D-Pack/Gen_3D_Modules/LRM/online_render/src/data/irrmaps/bsdf_256_256.bin', dtype=np.float32).reshape(1, 256, 256, 2), dtype=torch.float32, device='cuda')
+        _FG_LUT = torch.as_tensor(np.fromfile('./models/lrm/online_render/src/data/irrmaps/bsdf_256_256.bin', dtype=np.float32).reshape(1, 256, 256, 2), dtype=torch.float32, device='cuda')
         fg_lookup = dr.texture(_FG_LUT, fg_uv[None, ...], filter_mode='linear', boundary_mode='clamp')
         # Roughness adjusted specular env lookup
         

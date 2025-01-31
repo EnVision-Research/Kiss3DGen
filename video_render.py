@@ -10,6 +10,7 @@ from pytorch3d.renderer import (
     RasterizationSettings, 
     look_at_view_transform,
     TexturesVertex,
+    TexturesUV,
     MeshRenderer, 
     Materials,
     MeshRasterizer, 
@@ -21,6 +22,7 @@ from tqdm import tqdm
 from pytorch3d.transforms import RotateAxisAngle
 
 from shader import MultiOutputShader
+import pdb
 
 def _rgb_to_srgb(f: torch.Tensor) -> torch.Tensor:
     return torch.where(f <= 0.0031308, f * 12.92, torch.pow(torch.clamp(f, 0.0031308), 1.0/2.4)*1.055 - 0.055)
@@ -48,15 +50,35 @@ def render_video_from_obj(input_obj_path, output_video_path, num_frames=60, imag
     vertices = torch.tensor(mesh_data.vertices, dtype=torch.float32, device=device)
     faces = torch.tensor(mesh_data.faces, dtype=torch.int64, device=device)
 
-    if mesh_data.visual.vertex_colors is None:
-        vertex_colors = torch.ones_like(vertices)[None]
-    else:
+    pdb.set_trace()
+
+    if hasattr(mesh_data.visual, 'material') and hasattr(mesh_data.visual.material, 'image') and mesh_data.visual.material.image is not None:
+        # Case 1: Image-based texture
+        texture_image = mesh_data.visual.material.image
+        # Convert texture image to torch tensor
+        texture_image = torch.tensor(texture_image, dtype=torch.float32, device=device)[None]
+        # Get UV coordinates
+        if hasattr(mesh_data.visual, 'uv') and mesh_data.visual.uv is not None:
+            uvs = torch.tensor(mesh_data.visual.uv, dtype=torch.float32, device=device)[None]
+            textures = pytorch3d.renderer.TexturesUV(
+                maps=texture_image/255.0,  # Normalize to [0,1]
+                faces_uvs=torch.tensor(mesh_data.visual.face_attributes['texture_indices'], dtype=torch.int64, device=device)[None],
+                verts_uvs=uvs
+            )
+                
+    elif hasattr(mesh_data.visual, 'vertex_colors') and mesh_data.visual.vertex_colors is not None:
         vertex_colors = torch.tensor(mesh_data.visual.vertex_colors[:, :3], dtype=torch.float32)[None]
-    textures = TexturesVertex(verts_features=vertex_colors)
+        textures = TexturesVertex(verts_features=vertex_colors)
+    else:
+        vertex_colors = torch.ones_like(vertices)[None] * 255.0
+        textures = TexturesVertex(verts_features=vertex_colors/255.0)
+        raise ValueError("No texture information found in the mesh.")
+
     textures.to(device)
     mesh = pytorch3d.structures.Meshes(verts=[vertices], faces=[faces], textures=textures)
 
-    lights = AmbientLights(ambient_color=((2.0,)*3,), device=device)
+    lights = AmbientLights(ambient_color=((0.5,)*3,), device=device)
+    # lights = AmbientLights(ambient_color=((2.0,)*3,), device=device)
     # lights = PointLights(device=device, location=[[0.0, 0.0, 3.0]], ambient_color=[[0.5, 0.5, 0.5]], diffuse_color=[[1.0, 1.0, 1.0]])
     raster_settings = RasterizationSettings(
         image_size=image_size,
@@ -120,8 +142,3 @@ def render_video_from_obj(input_obj_path, output_video_path, num_frames=60, imag
     imageio.mimsave(output_video_path, frames, fps=fps)
 
     print(f"Video saved to {output_video_path}")
-
-if __name__ == '__main__':
-    input_obj_path = "354e2aee-091d-4dc6-bdb1-e09be5791218_isomer_recon_mesh.obj"
-    output_video_path = "output.mp4"
-    render_video_from_obj(input_obj_path, output_video_path)

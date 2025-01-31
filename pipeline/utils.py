@@ -1,6 +1,8 @@
 import os
 import sys
 import logging
+import pdb
+import time
 
 __workdir__ = '/'.join(os.path.abspath(__file__).split('/')[:-2])
 sys.path.insert(0, __workdir__)
@@ -9,11 +11,12 @@ print(__workdir__)
 
 import numpy as np
 import torch
+import torchvision
 from torchvision.transforms import v2
 from PIL import Image
 import rembg
 
-from models.lrm.online_render.render_single import load_mipmap
+from models.lrm.online_render.render_single import load_mipmap, render_mesh
 from models.lrm.utils.camera_util import get_zero123plus_input_cameras, get_custom_zero123plus_input_cameras, get_flux_input_cameras
 from models.lrm.utils.render_utils import rotate_x, rotate_y
 from models.lrm.utils.mesh_util import save_obj, save_obj_with_mtl
@@ -121,7 +124,7 @@ def lrm_reconstruct(model, infer_config, images,
 
 normal_transfer = NormalTransfer()
 
-def local_normal_global_transform(local_normal_images,azimuths_deg,elevations_deg):
+def local_normal_global_transform(local_normal_images, azimuths_deg, elevations_deg):
     if local_normal_images.min() >= 0:
         local_normal = local_normal_images.float() * 2 - 1
     else:
@@ -147,7 +150,7 @@ def isomer_reconstruct(
         reconstruction_stage1_steps=10,
         reconstruction_stage2_steps=50,
         radius=4.5):
-
+    end = time.time()
     device = rgb_multi_view.device
     to_tensor_ = lambda x: torch.Tensor(x).float().to(device)
 
@@ -198,6 +201,7 @@ def isomer_reconstruct(
     )
 
     logger.info(f"==> Save mesh to {save_glb_addr} ...")
+    print(f"ISMOER time: {time.time() - end:.2f}s")
     return save_glb_addr
 
 
@@ -214,7 +218,8 @@ def to_rgb_image(maybe_rgba):
     else:
         raise ValueError("Unsupported image type.", maybe_rgba.mode)
     
-rembg_session = rembg.new_session("u2net")
+
+rembg_session = rembg.new_session("isnet-general-use")
 def preprocess_input_image(input_image):
     """
     input_image: PIL.Image
@@ -224,3 +229,22 @@ def preprocess_input_image(input_image):
     image = resize_foreground(image, ratio=0.85, pad_value=255)
     return to_rgb_image(image)[0]
     
+
+def render_3d_bundle_image_from_mesh(mesh_path):
+    renderings = render_mesh(mesh_path, save_dir=None)
+
+    rgbs = renderings['rgb'][...,:3].cpu().permute(0, 3, 1, 2)
+    normals = renderings['normal'][...,:3].cpu()
+    alphas = renderings['alpha'][...,0].cpu()
+
+    # convert global normal to local normal
+    local_normal = local_normal_global_transform(normals.cpu(), azimuths_deg=np.array([0, 90, 180, 270]), elevations_deg=np.array([5, 5, 5, 5]))
+    local_normal = local_normal * alphas[:, None, ...] + (1 - alphas[:, None, ...])
+
+    bundle_image = torchvision.utils.make_grid(torch.cat([rgbs, local_normal], dim=0), nrow=4, padding=0)
+
+    # if save_dir is not None:
+    #     reference_save_path = f"{save_dir}/{mesh_path.split('/')[-1].split('.')[0]}_bundle.png"
+    #     torchvision.utils.save_image(bundle_image, reference_save_path)
+
+    return bundle_image
