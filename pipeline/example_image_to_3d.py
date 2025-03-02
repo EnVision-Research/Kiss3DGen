@@ -3,7 +3,7 @@ import os
 from pipeline.utils import logger, TMP_DIR, OUT_DIR
 import time
 if __name__ == "__main__":
-    k3d_wrapper = init_wrapper_from_config('./pipeline/pipeline_config/local.yaml')
+    k3d_wrapper = init_wrapper_from_config('./pipeline/pipeline_config/default.yaml')
 
     os.system(f'rm -rf {TMP_DIR}/*')
     os.makedirs(os.path.join(OUT_DIR, 'image_to_3d'), exist_ok=True)
