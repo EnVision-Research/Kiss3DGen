@@ -28,4 +28,3 @@ if __name__ == "__main__":
         print(f"image to 3d time: {time.time() - end}")
         os.system(f'cp -f {gen_save_path} {OUT_DIR}/redux_image_to_3d/{name}_3d_bundle.png')
         os.system(f'cp -f {recon_mesh_path} {OUT_DIR}/redux_image_to_3d/{name}.glb')
-        # exit()
