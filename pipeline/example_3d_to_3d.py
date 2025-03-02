@@ -5,7 +5,7 @@ from pipeline.utils import logger, TMP_DIR, OUT_DIR
 import time
 
 if __name__ == "__main__":
-    k3d_wrapper = init_wrapper_from_config('./pipeline/pipeline_config/default.yaml')
+    k3d_wrapper = init_wrapper_from_config('./pipeline/pipeline_config/redux_lora.yaml')
     # k3d_wrapper = None
 
     os.system(f'rm -rf {TMP_DIR}/*')
