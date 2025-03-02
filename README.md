@@ -65,24 +65,14 @@ we run it on A800 GPU with 80GB memory, if you only have a smaller GPU, you can 
 python ./pipeline/example_image_to_3d.py
 # Image-to-3D
 python ./pipeline/example_image_to_3d.py
+# 3D-to-3D
+python ./pipeline/example_3d_to_3d.py
 ```
 
 ## Gradio Demo
-Interactive inference: run your local gradio demo.
-1. Download the weights
+Interactive inference: Run your local gradio demo.
 ```bash
-python download_models.py
-```
-```
-Kiss3DGen
-    ├──checkpoint
-        ├── flux_lora/
-        ├── lrm/
-        ├── zero123++/
-```
-2. Run the local gradio demo
-```bash
-python app.py
+python ./app.py
 ```
 
 # 📜 Citation
