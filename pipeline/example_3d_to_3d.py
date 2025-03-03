@@ -18,12 +18,12 @@ if __name__ == "__main__":
     use_controlnet = True
     refine_prompt = False
 
-    prompts = open('./examples/mesh/prompts.txt', 'r').readlines()
-    # prompts = open('./examples/mesh/prompts_edit.txt', 'r').readlines()
+    prompts = open('./examples/enhancement/prompts.txt', 'r').readlines()
+    # prompts = open('./examples/enhancement/prompts_edit.txt', 'r').readlines()
 
     prompts_dict = {prompt.split(';')[0]: prompt.split(';')[1].strip() for prompt in prompts}
     
-    mesh_folder = './examples/mesh/enhancement_3d_meshes'
+    mesh_folder = './examples/enhancement/local_quality_3d_meshes'
     for mesh_name in os.listdir(mesh_folder):
         print("Now processing:", mesh_name)
         print("Prompt:", prompts_dict[mesh_name])
