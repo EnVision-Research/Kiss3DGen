@@ -62,7 +62,7 @@ python ./download_models.py
 we run it on A800 GPU with 80GB memory, if you only have a smaller GPU, you can change the models' device in the `pipeline/pipeline_config/default.yaml` file to use two or more smaller memory GPUs.
 ```bash
 # Text-to-3D
-python ./pipeline/example_image_to_3d.py
+python ./pipeline/example_text_to_3d.py
 # Image-to-3D
 python ./pipeline/example_image_to_3d.py
 # 3D-to-3D
