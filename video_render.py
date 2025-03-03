@@ -22,7 +22,6 @@ from tqdm import tqdm
 from pytorch3d.transforms import RotateAxisAngle
 
 from shader import MultiOutputShader
-import pdb
 
 def _rgb_to_srgb(f: torch.Tensor) -> torch.Tensor:
     return torch.where(f <= 0.0031308, f * 12.92, torch.pow(torch.clamp(f, 0.0031308), 1.0/2.4)*1.055 - 0.055)
@@ -50,7 +49,6 @@ def render_video_from_obj(input_obj_path, output_video_path, num_frames=60, imag
     vertices = torch.tensor(mesh_data.vertices, dtype=torch.float32, device=device)
     faces = torch.tensor(mesh_data.faces, dtype=torch.int64, device=device)
 
-    pdb.set_trace()
 
     if hasattr(mesh_data.visual, 'material') and hasattr(mesh_data.visual.material, 'image') and mesh_data.visual.material.image is not None:
         # Case 1: Image-based texture

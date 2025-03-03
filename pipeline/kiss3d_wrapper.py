@@ -571,14 +571,14 @@ class kiss3d_wrapper(object):
             recon_3D_bundle_image = torchvision.utils.make_grid(torch.cat([lrm_multi_view_rgb.cpu(), (lrm_multi_view_normals.cpu() + 1) / 2], dim=0), nrow=4, padding=0).unsqueeze(0) # range [0, 1]        
             torchvision.utils.save_image(recon_3D_bundle_image, os.path.join(TMP_DIR, f'{self.uuid}_lrm_recon_3d_bundle_image.png'))
 
-        recon_mesh_path = os.path.join(TMP_DIR, f"{self.uuid}_isomer_recon_mesh.glb")
+        recon_mesh_paths = [os.path.join(TMP_DIR, f"{self.uuid}_isomer_recon_mesh.glb"), os.path.join(TMP_DIR, f"{self.uuid}_isomer_recon_mesh.obj")]
         
         return isomer_reconstruct(rgb_multi_view=rgb_multi_view,
                                   normal_multi_view=normal_multi_view,
                                   multi_view_mask=multi_view_mask,
                                   vertices=vertices,
                                   faces=faces,
-                                  save_path=recon_mesh_path,
+                                  save_paths=recon_mesh_paths,
                                   radius=isomer_radius,
                                   reconstruction_stage1_steps=int(reconstruction_stage1_steps),
         reconstruction_stage2_steps=int(reconstruction_stage2_steps)

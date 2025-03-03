@@ -142,7 +142,7 @@ def isomer_reconstruct(
         multi_view_mask,
         vertices,
         faces,
-        save_path=None,
+        save_paths=None,
         azimuths=[0, 90, 180, 270],
         elevations=[5, 5, 5, 5],
         geo_weights=[1, 0.9, 1, 0.9],
@@ -197,10 +197,10 @@ def isomer_reconstruct(
         fov=30,
         radius=radius,
         save_dir=TMP_DIR,
-        save_glb_addr=save_path
+        save_addrs=save_paths
     )
 
-    logger.info(f"==> Save mesh to {save_glb_addr} ...")
+    logger.info(f"==> Save mesh to {save_paths} ...")
     print(f"ISMOER time: {time.time() - end:.2f}s")
     return save_glb_addr
 
@@ -243,8 +243,5 @@ def render_3d_bundle_image_from_mesh(mesh_path):
 
     bundle_image = torchvision.utils.make_grid(torch.cat([rgbs, local_normal], dim=0), nrow=4, padding=0)
 
-    # if save_dir is not None:
-    #     reference_save_path = f"{save_dir}/{mesh_path.split('/')[-1].split('.')[0]}_bundle.png"
-    #     torchvision.utils.save_image(bundle_image, reference_save_path)
 
     return bundle_image
