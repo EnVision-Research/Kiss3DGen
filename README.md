@@ -7,7 +7,7 @@
 <a href="https://ltt-o.github.io/Kiss3dgen.github.io"><img src="https://img.shields.io/badge/Project_Page-Online-EA3A97"></a>
 <a href="https://arxiv.org/abs/2503.01370"><img src="https://img.shields.io/badge/ArXiv-2503.01370-brightgreen"></a> 
 <a href="https://huggingface.co/spaces/LTT/Kiss3DGen"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Gradio%20Demo-Huggingface-orange"></a>
-<a href="#" style="pointer-events: none;"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Gradio%20Demo%20(Local)-Coming%20Soon-lightgrey"></a>
+<a href="https://envision-research.hkust-gz.edu.cn/kiss3dgen/" style="pointer-events: none;"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Gradio%20Demo%20(Local)-lightgrey"></a>
 <!-- <a href="https://huggingface.co/LTT/PRM"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Gradio%20Demo-Local-orange"></a> -->
 
 </div>
@@ -19,7 +19,7 @@
 - [✅] Release inference code.
 - [✅] Release model weights.
 - [✅] Release huggingface gradio demo. Please try it at [HF demo](https://huggingface.co/spaces/LTT/Kiss3DGen) link.
-- [] Release local gradio demo (more applications). Please try it at [Local demo](https://huggingface.co/spaces/LTT/Kiss3DGen) link.
+- [✅] Release local gradio demo (more applications). Please try it at [Local demo](https://envision-research.hkust-gz.edu.cn/kiss3dgen/) link.
 
 
 # ⚙️ Dependencies and Installation
