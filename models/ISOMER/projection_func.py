@@ -17,7 +17,7 @@ def projection(
     fov,
     radius,
     save_dir,
-    save_glb_addr=None,
+    save_addrs=None,
     remove_background=False,
     auto_center=False,
     projection_type="perspective",
@@ -27,9 +27,9 @@ def projection(
     rm_bkg_with_rembg=True,
 ):
     
-    if save_glb_addr is None:
+    if save_addrs is None:
         os.makedirs(save_dir, exist_ok=True)
-        save_glb_addr=os.path.join(save_dir,  "rgb_projected.glb")
+        save_addrs=[os.path.join(save_dir,  "rgb_projected.glb")]
 
     bs = len(images)
     assert len(azimuths) == bs, f'len(azimuths) ({len(azimuths)} != batchsize ({bs}))'
@@ -75,12 +75,12 @@ def projection(
             fovy=fov,
             radius=radius,
             scale_factor=mesh_scale_factor,
-            save_glb_addr=save_glb_addr,
+            save_addrs=save_addrs,
             scale_verts=True,
             complete_unseen=complete_unseen,
             below_confidence_strategy=below_confidence_strategy
             )
 
-    return save_glb_addr
+    return save_addrs[0] if type(save_addrs) == list else save_addrs
 
 
