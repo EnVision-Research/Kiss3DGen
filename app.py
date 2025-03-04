@@ -165,7 +165,7 @@ _HEADER_=f"""
     <b>Kiss3DGen: Repurposing Image Diffusion Models for 3D Asset Generation</b></a></h2>
 
 
-[![arXiv](https://img.shields.io/badge/arXiv-Link-red)]({ARXIV_LINK})  [![GitHub](https://img.shields.io/badge/GitHub-Repo-blue)]({GITHUB_LINK})
+[![arXiv](https://img.shields.io/badge/arXiv-Link-red)]({https://arxiv.org/abs/2503.01370})  [![GitHub](https://img.shields.io/badge/GitHub-Repo-blue)]({https://github.com/EnVision-Research/Kiss3DGen})
 """
 
 _CITE_ = r"""

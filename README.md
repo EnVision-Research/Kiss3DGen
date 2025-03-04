@@ -5,7 +5,7 @@
 # Kiss3DGen: Repurposing Image Diffusion Models for 3D Asset Generation
 
 <a href="https://ltt-o.github.io/Kiss3dgen.github.io"><img src="https://img.shields.io/badge/Project_Page-Online-EA3A97"></a>
-<a href="https://arxiv.org/abs/2412.07371"><img src="https://img.shields.io/badge/ArXiv-2412.07371-brightgreen"></a> 
+<a href="https://arxiv.org/abs/2503.01370"><img src="https://img.shields.io/badge/ArXiv-2503.01370-brightgreen"></a> 
 <a href="https://huggingface.co/spaces/LTT/Kiss3DGen"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Gradio%20Demo-Huggingface-orange"></a>
 <a href="#" style="pointer-events: none;"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Gradio%20Demo%20(Local)-Coming%20Soon-lightgrey"></a>
 <!-- <a href="https://huggingface.co/LTT/PRM"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Gradio%20Demo-Local-orange"></a> -->
@@ -79,11 +79,11 @@ python ./app.py
 If you find our work useful for your research or applications, please cite using this BibTeX:
 
 ```BibTeX
-@article{ge2024prm,
-  title={PRM: Photometric Stereo based Large Reconstruction Model},
-  author={Ge, Wenhang and Lin, Jiantao and Shen, Guibao and Feng, Jiawei and Hu, Tao and Xu, Xinli and Chen, Ying-Cong},
-  journal={arXiv preprint arXiv:2412.07371},
-  year={2024}
+@article{lin2025kiss3dgenrepurposingimagediffusion,
+  title={Kiss3DGen: Repurposing Image Diffusion Models for 3D Asset Generation},
+  author={Jiantao Lin, Xin Yang, Meixi Chen, Yingjie Xu, Dongyu Yan, Leyi Wu, Xinli Xu, Lie XU, Shunsi Zhang, Ying-Cong Chen},
+  journal={arXiv preprint arXiv:2503.01370},
+  year={2025}
 }
 ```
 
