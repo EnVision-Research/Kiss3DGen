@@ -94,6 +94,7 @@ We thank the authors of the following projects for their excellent contributions
 - [PRM](https://github.com/g3956/PRM)
 - [FlexGen](https://xxu068.github.io/flexgen.github.io/)
 - [Unique3D](https://github.com/AiuniAI/Unique3D)
+- [FluxGym](https://github.com/cocktailpeanut/fluxgym)
 
 
 
