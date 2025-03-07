@@ -79,9 +79,9 @@ python ./app.py
 If you find our work useful for your research or applications, please cite using this BibTeX:
 
 ```BibTeX
-@article{lin2025kiss3dgenrepurposingimagediffusion,
+@article{lin2025kiss3dgen,
   title={Kiss3DGen: Repurposing Image Diffusion Models for 3D Asset Generation},
-  author={Jiantao Lin, Xin Yang, Meixi Chen, Yingjie Xu, Dongyu Yan, Leyi Wu, Xinli Xu, Lie XU, Shunsi Zhang, Ying-Cong Chen},
+  author={Lin, Jiantao and Yang, Xin and Chen, Meixi and Xu, Yingjie and Yan, Dongyu and Wu, Leyi and Xu, Xinli and Xu, Lie and Zhang, Shunsi and Chen, Ying-Cong},
   journal={arXiv preprint arXiv:2503.01370},
   year={2025}
 }
