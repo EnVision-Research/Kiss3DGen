@@ -8,7 +8,7 @@
 <a href="https://arxiv.org/abs/2503.01370"><img src="https://img.shields.io/badge/ArXiv-2503.01370-brightgreen"></a> 
 <a href="https://huggingface.co/spaces/LTT/Kiss3DGen"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Gradio%20Demo-Huggingface-orange"></a>
 <a href="https://envision-research.hkust-gz.edu.cn/kiss3dgen/" style="pointer-events: none;"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Gradio%20Demo%20(Local)-lightgrey"></a>
-<!-- <a href="https://huggingface.co/LTT/PRM"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20Gradio%20Demo-Local-orange"></a> -->
+<a href="https://gen3d.funnycp.com/"><img src="https://img.shields.io/badge/%E5%95%86%E7%94%A8%E5%B9%B3%E5%8F%B0-%E8%B6%A3%E4%B8%B8%E4%B8%87%E7%9B%B8-blue"></a>
 
 </div>
 
