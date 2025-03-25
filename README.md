@@ -96,5 +96,7 @@ We thank the authors of the following projects for their excellent contributions
 - [Unique3D](https://github.com/AiuniAI/Unique3D)
 - [FluxGym](https://github.com/cocktailpeanut/fluxgym)
 
+Feel free to contact jlin695@connect.hkust-gz.edu.cn if you have any questions.
+
 
 
