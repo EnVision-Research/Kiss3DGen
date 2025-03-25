@@ -75,7 +75,7 @@ def projection(
             fovy=fov,
             radius=radius,
             scale_factor=mesh_scale_factor,
-            save_addrs=save_addrs,
+            save_glb_addr=save_addrs,
             scale_verts=True,
             complete_unseen=complete_unseen,
             below_confidence_strategy=below_confidence_strategy
